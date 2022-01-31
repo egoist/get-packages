@@ -5,6 +5,11 @@ import { getPackages } from "../src"
 const getFixturePath = (...args: string[]) =>
   path.join(__dirname, "fixtures", ...args)
 
+const slash = (p: string) => p.replace(/\\/g, "/")
+
+const expectPathEqual = (a: string, b: string) =>
+  expect(slash(a)).toEqual(slash(b))
+
 test("pnpm", async () => {
   const workspace = await getPackages(getFixturePath("pnpm"))
 
@@ -12,11 +17,11 @@ test("pnpm", async () => {
     expect.fail()
   }
 
-  expect(workspace.root.path).toEqual(getFixturePath("pnpm"))
+  expectPathEqual(workspace.root.path, getFixturePath("pnpm"))
   expect(workspace.npmClient).toEqual("pnpm")
 
   for (const pkg of workspace.packages) {
-    expect(pkg.path).toEqual(getFixturePath("pnpm/packages", pkg.data.name))
+    expectPathEqual(pkg.path, getFixturePath("pnpm/packages", pkg.data.name))
   }
 })
 
@@ -27,10 +32,10 @@ test("yarn", async () => {
     expect.fail()
   }
 
-  expect(workspace.root.path).toEqual(getFixturePath("yarn"))
+  expectPathEqual(workspace.root.path, getFixturePath("yarn"))
   expect(workspace.npmClient).toEqual("yarn")
 
   for (const pkg of workspace.packages) {
-    expect(pkg.path).toEqual(getFixturePath("yarn/packages", pkg.data.name))
+    expectPathEqual(pkg.path, getFixturePath("yarn/packages", pkg.data.name))
   }
 })
