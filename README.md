@@ -2,29 +2,38 @@
 
 ---
 
-# my-ts-lib
+# @egoist/get-packages
 
-[![npm version](https://badgen.net/npm/v/my-ts-lib)](https://npm.im/my-ts-lib) [![npm downloads](https://badgen.net/npm/dm/my-ts-lib)](https://npm.im/my-ts-lib)
+[![npm version](https://badgen.net/npm/v/@egoist/get-packages)](https://npm.im/@egoist/get-packages) [![npm downloads](https://badgen.net/npm/dm/@egoist/get-packages)](https://npm.im/@egoist/get-packages)
 
-## Using this template
-
-- Search `my-ts-lib` and replace it with your custom package name.
-- Search `egoist` and replace it with your name.
-
-Features:
-
-- Package manager [pnpm](https://pnpm.js.org/), safe and fast
-- Release with [semantic-release](https://npm.im/semantic-release)
-- Bundle with [tsup](https://github.com/egoist/tsup)
-- Test with [vitest](https://vitest.dev)
-
-To skip CI (GitHub action), add `skip-ci` to commit message. To skip release, add `skip-release` to commit message.
+> Get packages from a monorepo (pnpm, yarn, npm, lerna)
 
 ## Install
 
 ```bash
-npm i my-ts-lib
+npm i @egoist/get-packages
 ```
+
+## Usage
+
+```ts
+import { getPackages } from "@egoist/get-packages"
+
+const workspace = await getPackages(".")
+
+// For a monorepo:
+// workspace.type => 'monorepo'
+// workspace.npmClient => 'pnpm' | 'yarn' | 'npm'
+// workspace.root => { data, path }
+// workspace.packages => [{ data, path }]
+
+// For a non-monorepo:
+// workspace.type => 'non-monorepo'
+// workspace.npmClient => 'pnpm' | 'yarn' | 'npm'
+// workspace.package => { data, path }
+```
+
+Type docs: https://paka.dev/npm/@egoist/get-packages
 
 ## Sponsors
 
